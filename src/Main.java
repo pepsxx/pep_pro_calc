@@ -14,11 +14,11 @@ public class Main {
 
 
         //Переменные определяющие рамки условий, можно менять, соответственно изменятся условия - Начало
-        String[] ppMasOperant = {"+", "-", "*", "/"}; //Разрешонные  для ввода операции
-        String ppValidnyeSimvolyArab = "0123456789";  //Разрешенные  для ввода символы - Арабские
-        String ppValidnyeSimvolyRim = "IVXLCDM";      //Разрешенные  для ввода символы - Римские
-        int ppValidOperMin = 1;                       //Разрешеееное для ввода число - Минимальное
-        int ppValidOperMax = 5000;                    //Разрешеееное для ввода число - Максимальное
+        String[] ppMasOperant = {"+", "-", "*", "/"}; //Разрешённые для ввода операции
+        String ppValidnyeSimvolyArab = "0123456789";  //Разрешённые для ввода символы - Арабские
+        String ppValidnyeSimvolyRim = "IVXLCDM";      //Разрешённые для ввода символы - Римские
+        int ppValidOperMin = 1;                       //Разрешённое для ввода число   - Минимальное
+        int ppValidOperMax = 5000;                    //Разрешённое для ввода число   - Максимальное
         // Переменные определяющие рамки условий, можно менять, соответственно изменятся условия - Конец
 
 
@@ -143,7 +143,7 @@ public class Main {
     }
 
 
-    //Функция: Проверки соответсвия символов
+    //Функция: Проверки соответствия символов
     public static boolean pfTips(String ppElement, String ppRul) {
         boolean ppTips = true;
         for (int i = 0; i < ppElement.length(); i++) {
@@ -172,43 +172,46 @@ public class Main {
 
 
     //Функция: Перевода из Римские в Арабские (осн)
-    public static int pfNumArab(String ppNumRim, String[] ppMRimT, String[] ppMRimS, String[] ppMRimD, String[] ppMRimE) {
+    public static int pfNumArab(String ppNumRim, String[] ppMRimT, String[] ppMRimS, String[] ppMRimD, String[] ppMRimE) throws Exception {
         int ppNumArab = 0;
-        int ppNumRimBlock = 0;
         int[] ppMasArab = {0, 0};
-        for (int i = 0; i < 4; i++) {
-            ppNumRimBlock = Math.min(ppNumRim.length(), 4);
-            ppMasArab = pfMasArab(ppNumRim, ppNumRimBlock, ppMRimT, 1000);
-            if (ppMasArab[0] == 0) {
-                ppMasArab = pfMasArab(ppNumRim, ppNumRimBlock, ppMRimS, 100);
-                if (ppMasArab[0] == 0) {
-                    ppMasArab = pfMasArab(ppNumRim, ppNumRimBlock, ppMRimD, 10);
-                    if (ppMasArab[0] == 0) {
-                        ppMasArab = pfMasArab(ppNumRim, ppNumRimBlock, ppMRimE, 1);
-                    }
-                }
-            }
-            ppNumRim = ppNumRim.substring(ppMasArab[1]);
-            ppNumArab += ppMasArab[0];
-        }
+        //Получение тысяч
+        ppMasArab = pfMasArab(ppNumRim, ppMRimT, 1000);
+        ppNumRim = ppNumRim.substring(ppMasArab[1]);
+        ppNumArab += ppMasArab[0];
+        //Получение сотен
+        ppMasArab = pfMasArab(ppNumRim, ppMRimS, 100);
+        ppNumRim = ppNumRim.substring(ppMasArab[1]);
+        ppNumArab += ppMasArab[0];
+        //Получение десятков
+        ppMasArab = pfMasArab(ppNumRim, ppMRimD, 10);
+        ppNumRim = ppNumRim.substring(ppMasArab[1]);
+        ppNumArab += ppMasArab[0];
+        //Получение единиц
+        ppMasArab = pfMasArab(ppNumRim, ppMRimE, 1);
+        ppNumRim = ppNumRim.substring(ppMasArab[1]);
+        ppNumArab += ppMasArab[0];
+        if (ppNumRim.length() > 0)
+            throw new Exception ("Error: Не корректное римское число. Пример правильного римского числа: " + pfNumRim(ppNumArab, ppMRimT, ppMRimS, ppMRimD, ppMRimE));
         return ppNumArab;
     }
 
 
     //Функция: Перевода из Римские в Арабские (доп)
-    public static int[] pfMasArab(String ppNumRim, int ppMaxSimv, String[] ppMRimX, int ppX) {
-        int[] ppMasArab = new int[2];
+    public static int[] pfMasArab(String ppNumRim, String[] ppMRimX, int ppX) {
+        int[] ppNumArab = new int[2];
+        int ppMaxSimv = Math.min(ppNumRim.length(), 4);
         for (int j = ppMaxSimv; j > 0; j--) {
             for (int i = 0; i < ppMRimX.length; i++) {
                 if (ppMRimX[i].equals(ppNumRim.substring(0, j))) {
-                    ppMasArab[0] = ppMasArab[0] + (ppX * i);
-                    ppMasArab[1] = j;
+                    ppNumArab[0] = ppNumArab[0] + (ppX * i);
+                    ppNumArab[1] = j;
                     j = 0;
                     break;
                 }
             }
         }
-        return ppMasArab;
+        return ppNumArab;
     }
 
 
