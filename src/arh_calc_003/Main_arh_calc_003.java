@@ -1,8 +1,10 @@
+package arh_calc_003;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Main_arh_calc_003 {
     public static void main(String[] args) throws Exception {
 
 
@@ -23,10 +25,9 @@ public class Main {
         // Переменные определяющие рамки условий, можно менять, соответственно изменятся условия - Конец
 
 
-        //Предварительные проверки и подготовка переменных
+        //Предварительные проверки и предварительные вычисления
         pfChek001(ppValidOperMin, ppValidOperMax);
         String ppValidnyeSimvoly = " " + ppValidnyeSimvolyArab + ppValidnyeSimvolyRim + String.join("", ppMasOperant);
-        List<String[]> ppLRimX = List.of(ppMRimT, ppMRimS, ppMRimD, ppMRimE);
 
         //Диалог с пользователем (не обязательный код, можно закомментировать строчку)
         pfDialog001(ppValidOperMin, ppValidOperMax, ppMasOperant);
@@ -49,26 +50,26 @@ public class Main {
         //Проверка операндов и вычисление - Начало
         //Проверка операндов на соответствие Арабским символам и вычисление
         if (pfTips(ppMasElements[0], ppValidnyeSimvolyArab) && pfTips(ppMasElements[2], ppValidnyeSimvolyArab)) {
-            System.out.printf("Цифры определены как Арабские, будет вычисляться выражение: [%s]%nОтвет: %s = %d%n", ppSring001, ppSring001, pfResult(Integer.parseInt(ppMasElements[0]), ppMasElements[1], Integer.parseInt(ppMasElements[2]), ppValidOperMin, ppValidOperMax));
+            System.out.printf("Цифры определены как Арабские, будет вычисляться выражение: [%s]\nОтвет: %s = %d\n", ppSring001, ppSring001, pfResult(Integer.parseInt(ppMasElements[0]), ppMasElements[1], Integer.parseInt(ppMasElements[2]), ppValidOperMin, ppValidOperMax));
         } else
             //Проверка операндов на соответствие Римским символам перевод и вычисление
             if (pfTips(ppMasElements[0], ppValidnyeSimvolyRim) && pfTips(ppMasElements[2], ppValidnyeSimvolyRim)) {
-                System.out.printf("Цифры определены как Римские, будет вычисляться выражение: [%s]%n", ppSring001);
+                System.out.printf("Цифры определены как Римские, будет вычисляться выражение: [%s]\n", ppSring001);
 
                 //Перевод Римских цифр в Арабские
-                int ppRimToArab0 = pfNumArab(ppMasElements[0], ppLRimX);
-                int ppRimToArab2 = pfNumArab(ppMasElements[2], ppLRimX);
+                int ppRimToArab0 = pfNumArab(ppMasElements[0], ppMRimT, ppMRimS, ppMRimD, ppMRimE);
+                int ppRimToArab2 = pfNumArab(ppMasElements[2], ppMRimT, ppMRimS, ppMRimD, ppMRimE);
 
                 //Вычисление выражения
                 int ppResult = pfResult(ppRimToArab0, ppMasElements[1], ppRimToArab2, ppValidOperMin, ppValidOperMax);
 
                 //Вывод результата
                 if (ppResult > 3999)
-                    throw new Exception("\n\nт.к. получилось число " + ppResult + ",а в Римской системе отсутствуют числа больше 3999\n");
+                    throw new Exception("\n\nт.к. получилось число " + ppResult + ",а в Римском системе отсутствуют числа больше 3999\n");
                 else if (ppResult <= 0)
-                    throw new Exception("\n\nт.к. получилось число " + ppResult + ",а в Римской системе отсутствуют отрицательные числа и ноль\n");
+                    throw new Exception("\n\nт.к. получилось число " + ppResult + ",а в Римском системе отсутствуют отрицательные числа и ноль\n");
                 else
-                    System.out.printf("Ответ: %s = %s%n", ppSring001, pfNumRim(ppResult, ppLRimX));
+                    System.out.printf("Ответ: %s = %s\n", ppSring001, pfNumRim(ppResult, ppMRimT, ppMRimS, ppMRimD, ppMRimE));
             } else {
                 //Остановка если операнды разных типов
                 throw new Exception("\n\nError: т.к. используются одновременно разные системы исчисления или присутствуют не допустимые символы\n");
@@ -122,7 +123,7 @@ public class Main {
 
     //Функция: Исправления опечаток
     public static String pfIspravOpechatok(String ppSring001, String ppValidnyeSimvoly, String[] ppMasOperant) throws Exception {
-        System.out.printf("--------------------------------------------------%nВы  ввели выражение: [%s]%n", ppSring001);
+        System.out.printf("--------------------------------------------------\nВы  ввели выражение: [%s]\n", ppSring001);
         //Перевод символов в верхний регистр
         ppSring001 = ppSring001.toUpperCase();
         //Проверка введенной строки на допустимые символы
@@ -154,10 +155,9 @@ public class Main {
             ppSring001 = ppSring001.replace("  ", " ");
         }
         //Исправления опечаток (не обязательный код, можно закомментировать) - Конец
-        System.out.printf("Оно преобразовано в: [%s]%n--------------------------------------------------%n", ppSring001);
+        System.out.printf("Оно преобразовано в: [%s]\n--------------------------------------------------\n", ppSring001);
         return ppSring001;
     }
-
 
     //Функция: выполнения операций
     public static int pfResult(int ppE0, String ppE1, int ppE2, int ppMin, int ppMax) throws Exception {
@@ -182,40 +182,40 @@ public class Main {
         return r;
     }
 
-
     //Функция: Проверки соответствия символов
     public static boolean pfTips(String ppElement, String ppRul) {
+        boolean b = true;
         for (int i = 0; i < ppElement.length(); i++) {
             if (!ppRul.contains(String.valueOf(ppElement.charAt(i)))) {
-                return false;
+                b = false;
+                break;
             }
         }
-        return true;
+        return b;
     }
 
-
     //Функция: Перевода из Арабских в Римские
-    public static String pfNumRim(int ppNumArab, List<String[]> ppLRimX) {
+    public static String pfNumRim(int ppNumArab, String[] ppMRimT, String[] ppMRimS, String[] ppMRimD, String[] ppMRimE) {
         int t = ppNumArab / 1000;
         int s = (ppNumArab - (t * 1000)) / 100;
         int d = (ppNumArab - (t * 1000) - (s * 100)) / 10;
         int e = (ppNumArab - (t * 1000) - (s * 100) - (d * 10));
-        return ppLRimX.get(0)[t] + ppLRimX.get(1)[s] + ppLRimX.get(2)[d] + ppLRimX.get(3)[e];
+        return ppMRimT[t] + ppMRimS[s] + ppMRimD[d] + ppMRimE[e];
     }
 
-
     //Функция: Перевода из Римские в Арабские (основной)
-    public static int pfNumArab(String ppNumRim, List<String[]> ppLRimX) throws Exception {
+    public static int pfNumArab(String ppNumRim, String[] ppMRimT, String[] ppMRimS, String[] ppMRimD, String[] ppMRimE) throws Exception {
         int ppNumArab = 0;
         int[] ppMasArab;
         List<Integer> ppLRazryady = List.of(1000, 100, 10, 1);
+        List<String[]> ppLRimX = List.of(ppMRimT, ppMRimS, ppMRimD, ppMRimE);
         for (int i = 0; i < 4; i++) {
             ppMasArab = pfMasArab(ppNumRim, ppLRimX.get(i), ppLRazryady.get(i));
             ppNumRim = ppNumRim.substring(ppMasArab[1]);
             ppNumArab += ppMasArab[0];
         }
         if (ppNumRim.length() > 0)
-            throw new Exception("\n\nError: Не корректное римское число.\nПример правильного римского  числа: " + pfNumRim(ppNumArab, ppLRimX) + "\n");
+            throw new Exception("\n\nError: Не корректное римское число.\nПример правильного римского  числа: " + pfNumRim(ppNumArab, ppMRimT, ppMRimS, ppMRimD, ppMRimE) + "\n");
         return ppNumArab;
     }
 
