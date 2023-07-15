@@ -3,7 +3,7 @@ package arh_calc_001;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class Main_arh_calc_001 {
     public static void main(String[] args) throws Exception {
 
         //Переменные определяющие рамки условий, можно менять, соответственно изменятся условия - Начало
