@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +25,7 @@ public class Main {
         //Предварительные проверки и подготовка переменных
         pfChek001(ppValidOperMin, ppValidOperMax);
         String ppValidnyeSimvoly = " " + ppValidnyeSimvolyArab + ppValidnyeSimvolyRim + String.join("", ppMasOperant);
-        List<String[]> ppLRimX = List.of(ppMRimT, ppMRimS, ppMRimD, ppMRimE);
+        String[][] ppMMRimX = {ppMRimT, ppMRimS, ppMRimD, ppMRimE};
 
         //Диалог с пользователем (это не обязательный код, можно закомментировать строчку)
         pfDialog001(ppValidOperMin, ppValidOperMax, ppMasOperant);
@@ -56,8 +55,8 @@ public class Main {
                 System.out.printf("Цифры определены как Римские, будет вычисляться выражение: [%s]%n", ppSring001);
 
                 //Перевод Римских цифр в Арабские
-                int ppRimToArab0 = pfNumArab(ppMasElements[0], ppLRimX);
-                int ppRimToArab2 = pfNumArab(ppMasElements[2], ppLRimX);
+                int ppRimToArab0 = pfNumArab(ppMasElements[0], ppMMRimX);
+                int ppRimToArab2 = pfNumArab(ppMasElements[2], ppMMRimX);
 
                 //Вычисление выражения
                 int ppResult = pfResult(ppRimToArab0, ppMasElements[1], ppRimToArab2, ppValidOperMin, ppValidOperMax);
@@ -69,7 +68,7 @@ public class Main {
                     throw new Exception("\n\nт.к. получилось число " + ppResult + ",а в Римской системе отсутствуют отрицательные числа и ноль\n");
                 else
                     //Перевод Арабских цифр в Римские
-                    System.out.printf("Ответ: %s = %s%n", ppSring001, pfNumRim(ppResult, ppLRimX));
+                    System.out.printf("Ответ: %s = %s%n", ppSring001, pfNumRim(ppResult, ppMMRimX));
             } else {
                 //Остановка если операнды разных типов
                 throw new Exception("\n\nError: т.к. используются одновременно разные системы исчисления или присутствуют не допустимые символы\n");
@@ -193,23 +192,23 @@ public class Main {
 
 
     //Функция: Перевода из Арабских в Римские
-    public static String pfNumRim(int i, List<String[]> ppLRimX) {
-        return ppLRimX.get(0)[i / 1000] + ppLRimX.get(1)[i % 1000 / 100] + ppLRimX.get(2)[i % 100 / 10] + ppLRimX.get(3)[i % 10];
+    public static String pfNumRim(int i, String[][] ppMMRimX) {
+        return ppMMRimX[0][i / 1000] + ppMMRimX[1][i % 1000 / 100] + ppMMRimX[2][i % 100 / 10] + ppMMRimX[3][i % 10];
     }
 
 
     //Функция: Перевода из Римские в Арабские (основной)
-    public static int pfNumArab(String ppNumRim, List<String[]> ppLRimX) throws Exception {
+    public static int pfNumArab(String ppNumRim, String[][] ppMMRimX) throws Exception {
         int ppNumArab = 0;
         int[] ppMasArab;
-        List<Integer> ppLRazryady = List.of(1000, 100, 10, 1);
+        Integer[] ppMRazryady = {1000, 100, 10, 1};
         for (int i = 0; i < 4; i++) {
-            ppMasArab = pfMasArab(ppNumRim, ppLRimX.get(i), ppLRazryady.get(i));
+            ppMasArab = pfMasArab(ppNumRim, ppMMRimX[i], ppMRazryady[i]);
             ppNumRim = ppNumRim.substring(ppMasArab[1]);
             ppNumArab += ppMasArab[0];
         }
         if (ppNumRim.length() > 0)
-            throw new Exception("\n\nError: Не корректное римское число.\nПример правильного римского  числа: " + pfNumRim(ppNumArab, ppLRimX) + "\n");
+            throw new Exception("\n\nError: Не корректное римское число.\nПример правильного римского  числа: " + pfNumRim(ppNumArab, ppMMRimX) + "\n");
         return ppNumArab;
     }
 
