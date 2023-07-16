@@ -1,7 +1,9 @@
+package arh_calc_005_priv;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class Main_arh_calc_005_priv {
 
     //    private static String ppTest = "aaa";
     private static int ppNumArab;
@@ -229,3 +231,4 @@ public class Main {
 
 
 }
+
