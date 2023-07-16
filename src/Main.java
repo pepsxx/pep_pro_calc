@@ -28,7 +28,7 @@ public class Main {
         String ppValidnyeSimvoly = " " + ppValidnyeSimvolyArab + ppValidnyeSimvolyRim + String.join("", ppMasOperant);
         List<String[]> ppLRimX = List.of(ppMRimT, ppMRimS, ppMRimD, ppMRimE);
 
-        //Диалог с пользователем (не обязательный код, можно закомментировать строчку)
+        //Диалог с пользователем (это не обязательный код, можно закомментировать строчку)
         pfDialog001(ppValidOperMin, ppValidOperMax, ppMasOperant);
 
         //Ввод данных пользователем
@@ -36,7 +36,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String ppSring001 = scanner.nextLine();
 
-        //Исправления опечаток (не обязательный код, можно закомментировать строчку)
+        //Исправления опечаток (это не обязательный код, можно закомментировать строчку)
         ppSring001 = pfIspravOpechatok(ppSring001, ppValidnyeSimvoly, ppMasOperant);
 
         //Разделение строки на элементы
@@ -68,6 +68,7 @@ public class Main {
                 else if (ppResult <= 0)
                     throw new Exception("\n\nт.к. получилось число " + ppResult + ",а в Римской системе отсутствуют отрицательные числа и ноль\n");
                 else
+                    //Перевод Арабских цифр в Римские
                     System.out.printf("Ответ: %s = %s%n", ppSring001, pfNumRim(ppResult, ppLRimX));
             } else {
                 //Остановка если операнды разных типов
@@ -164,6 +165,7 @@ public class Main {
         int r;
         if (ppE0 >= ppMin && ppE0 <= ppMax && ppE2 >= ppMin && ppE2 <= ppMax) {
             switch (ppE1) {
+                case "%" -> r = ppE0 % ppE2;
                 case "+" -> r = ppE0 + ppE2;
                 case "-" -> r = ppE0 - ppE2;
                 case "*" -> r = ppE0 * ppE2;
@@ -173,7 +175,6 @@ public class Main {
                     int i = ppE0 % ppE2;
                     if (i != 0) System.out.println("В ответе будет отброшен остаток: " + i);
                 }
-                case "%" -> r = ppE0 % ppE2;
                 default -> throw new Exception("\n\nError: Не известный операнд\n");
             }
         } else {
@@ -185,22 +186,15 @@ public class Main {
 
     //Функция: Проверки соответствия символов
     public static boolean pfTips(String ppElement, String ppRul) {
-        for (int i = 0; i < ppElement.length(); i++) {
-            if (!ppRul.contains(String.valueOf(ppElement.charAt(i)))) {
-                return false;
-            }
-        }
+        for (int i = 0; i < ppElement.length(); i++)
+            if (!ppRul.contains(String.valueOf(ppElement.charAt(i)))) return false;
         return true;
     }
 
 
     //Функция: Перевода из Арабских в Римские
-    public static String pfNumRim(int ppNumArab, List<String[]> ppLRimX) {
-        int t = ppNumArab / 1000;
-        int s = (ppNumArab - (t * 1000)) / 100;
-        int d = (ppNumArab - (t * 1000) - (s * 100)) / 10;
-        int e = (ppNumArab - (t * 1000) - (s * 100) - (d * 10));
-        return ppLRimX.get(0)[t] + ppLRimX.get(1)[s] + ppLRimX.get(2)[d] + ppLRimX.get(3)[e];
+    public static String pfNumRim(int i, List<String[]> ppLRimX) {
+        return ppLRimX.get(0)[i / 1000] + ppLRimX.get(1)[i % 1000 / 100] + ppLRimX.get(2)[i % 100 / 10] + ppLRimX.get(3)[i % 10];
     }
 
 
@@ -229,8 +223,7 @@ public class Main {
                 if (ppMRimX[i].equals(ppNumRim.substring(0, j))) {
                     ppNumArab[0] = ppNumArab[0] + (ppX * i);
                     ppNumArab[1] = j;
-                    j = 0;
-                    break;
+                    return ppNumArab;
                 }
             }
         }
