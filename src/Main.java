@@ -157,7 +157,6 @@ public class Main {
         while (ppSring001.contains("  ")) {
             ppSring001 = ppSring001.replace("  ", " ");
         }
-        //Исправления опечаток (не обязательный код, можно закомментировать) - Конец
         System.out.printf("Оно преобразовано в: [%s]%n--------------------------------------------------%n", ppSring001);
         return ppSring001;
     }
@@ -178,7 +177,7 @@ public class Main {
                     int i = ppE0 % ppE2;
                     if (i != 0) System.out.println("В ответе будет отброшен остаток: " + i);
                 }
-                default -> throw new Exception("\n\nError: Не известный операнд\n");
+                default -> throw new Exception("\n\nError: Не известный оператор\n");
             }
         } else {
             throw new Exception("\n\nМинимальное  разрешённое число в программе: " + ppMin + "\nМаксимальное разрешённое число в программе: " + ppMax + "\nError: Как минимум одно из чисел не отвечает требуемому диапазону\n");
