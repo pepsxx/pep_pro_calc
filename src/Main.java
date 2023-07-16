@@ -2,8 +2,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-
-    //    private static String ppTest = "aaa";
     private static int ppNumArab;
     private static String ppNumRim;
 
@@ -205,7 +203,7 @@ public class Main {
         ppNumRim = ppElement;
         ppNumArab = 0;
         for (int i = 1000; i > 0; i = i / 10) // Четыре итерации поиска: Тысячи, Сотни, десятки, единицы.
-            pfMasArab(ppMMRimX[((String.valueOf(i).length()-4)*(-1))], i);
+            pfMasArab(ppMMRimX[((String.valueOf(i).length() - 4) * (-1))], i);
         if (ppNumRim.length() > 0)
             throw new Exception("\n\nError: Не корректное римское число.\nПример правильного римского  числа: " + pfNumRim(ppNumArab, ppMMRimX) + "\n");
         return ppNumArab;

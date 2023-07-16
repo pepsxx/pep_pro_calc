@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main_arh_calc_005_priv {
-
-    //    private static String ppTest = "aaa";
     private static int ppNumArab;
     private static String ppNumRim;
 
@@ -159,7 +157,6 @@ public class Main_arh_calc_005_priv {
         while (ppSring001.contains("  ")) {
             ppSring001 = ppSring001.replace("  ", " ");
         }
-        //Исправления опечаток (не обязательный код, можно закомментировать) - Конец
         System.out.printf("Оно преобразовано в: [%s]%n--------------------------------------------------%n", ppSring001);
         return ppSring001;
     }
@@ -180,7 +177,7 @@ public class Main_arh_calc_005_priv {
                     int i = ppE0 % ppE2;
                     if (i != 0) System.out.println("В ответе будет отброшен остаток: " + i);
                 }
-                default -> throw new Exception("\n\nError: Не известный операнд\n");
+                default -> throw new Exception("\n\nError: Не известный оператор\n");
             }
         } else {
             throw new Exception("\n\nМинимальное  разрешённое число в программе: " + ppMin + "\nМаксимальное разрешённое число в программе: " + ppMax + "\nError: Как минимум одно из чисел не отвечает требуемому диапазону\n");
@@ -208,7 +205,7 @@ public class Main_arh_calc_005_priv {
         ppNumRim = ppElement;
         ppNumArab = 0;
         for (int i = 1000; i > 0; i = i / 10) // Четыре итерации поиска: Тысячи, Сотни, десятки, единицы.
-            pfMasArab(ppMMRimX[((String.valueOf(i).length()-4)*(-1))], i);
+            pfMasArab(ppMMRimX[((String.valueOf(i).length() - 4) * (-1))], i);
         if (ppNumRim.length() > 0)
             throw new Exception("\n\nError: Не корректное римское число.\nПример правильного римского  числа: " + pfNumRim(ppNumArab, ppMMRimX) + "\n");
         return ppNumArab;
