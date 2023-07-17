@@ -216,7 +216,7 @@ public class Main {
         for (int j = ppMaxSimv; j > 0; j--) {          // Если пришло [XXVII], 1 цикл проверка соответствия [XXVI], 2 цикл проверка соответствия [XXV], 3 цикл проверка соответствия [XX].
             for (int i = 0; i < ppMRimX.length; i++) { // В данном примере производится проверка соответствия с этим: X, XX, XXX, XL, L, LX, LXX, LXXX, XC.
                 if (ppMRimX[i].equals(ppNumRim.substring(0, j))) { // В итоге найдется соответствие с [XX].
-                    ppNumArab = ppNumArab + (ppX * i); // Если пришло [XXVII], найдется [XX] зафиксируется как 2, Далее X=X+(2*i), где i разрядность, в этом примере i=10.
+                    ppNumArab = ppNumArab + (ppX * i); // Если пришло [XXVII], найдется [XX] зафиксируется как 2, Далее A=A+(2*i), где i разрядность, в этом примере i=10.
                     ppNumRim = ppNumRim.substring(j);  // Если пришло [XXVII], найдется [XX] и отрежется, останется [VII] для следующего цикла проверки.
                     return;
                 }
