@@ -1,7 +1,9 @@
+package arh_calc_006;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class Main_arh_calc_006 {
     private static int ppNumArab;
     private static String ppNumRim;
 
