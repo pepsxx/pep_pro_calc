@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main_arh_calc_007 {
-    private static int ppNumArab;
-    private static String ppNumRim;
 
     public static void main(String[] args) throws Exception {
 
@@ -201,15 +199,15 @@ public class Main_arh_calc_007 {
 
     //Функция: Перевода из Римские в Арабские
     public static int pfNumArab(String ppElement, String[][] ppMMRimX) throws Exception {
-        ppNumRim = ppElement;
-        ppNumArab = 0;
+        String ppNumRim = ppElement;
+        int ppNumArab = 0;
         int ppMaxSimv;
         for (int i = 0; i < 4; i++) {                                                //Четыре итерации поиска: Тысячи, Сотни, Десятки, Единицы.
             ppMaxSimv = Math.min(ppNumRim.length(), 4);                              //ppMaxSimv приравнивается к максимальному количеству оставшихся символов, но не больше 4.
             for (int ppSimvKolVo = ppMaxSimv; ppSimvKolVo > 0; ppSimvKolVo--) {      //Если пришло [XXVII], 1 цикл проверка соответствия [XXVI], 2 цикл проверка соответствия [XXV], 3 цикл проверка соответствия [XX].
                 for (int j = 0; j < ppMMRimX[i].length; j++) {                       //В данном примере производится проверка соответствия с этим: X, XX, XXX, XL, L, LX, LXX, LXXX, XC. (Десятки)
                     if (ppMMRimX[i][j].equals(ppNumRim.substring(0, ppSimvKolVo))) { //В итоге найдется соответствие с [XX].
-                        ppNumArab = ppNumArab + (int) (1000/Math.pow(10,i) * j);     //Если пришло [XXVII], найдется [XX] зафиксируется как 2, Далее A=A+(2*i), где i разрядность, в этом примере i=10. (Десятки)
+                        ppNumArab = ppNumArab + (int) (1000 / Math.pow(10, i) * j);     //Если пришло [XXVII], найдется [XX] зафиксируется как 2, Далее A=A+(2*i), где i разрядность, в этом примере i=10. (Десятки)
                         ppNumRim = ppNumRim.substring(ppSimvKolVo);                  //Если пришло [XXVII], найдется [XX] и отрежется, останется [VII] для следующего цикла проверки.
                         ppSimvKolVo = 0;
                         break;

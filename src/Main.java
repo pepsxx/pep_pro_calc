@@ -2,8 +2,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    private static int ppNumArab;
-    private static String ppNumRim;
 
     public static void main(String[] args) throws Exception {
 
@@ -199,8 +197,8 @@ public class Main {
 
     //Функция: Перевода из Римские в Арабские
     public static int pfNumArab(String ppElement, String[][] ppMMRimX) throws Exception {
-        ppNumRim = ppElement;
-        ppNumArab = 0;
+        String ppNumRim = ppElement;
+        int ppNumArab = 0;
         int ppMaxSimv;
         for (int i = 0; i < 4; i++) {                                                //Четыре итерации поиска: Тысячи, Сотни, Десятки, Единицы.
             ppMaxSimv = Math.min(ppNumRim.length(), 4);                              //ppMaxSimv приравнивается к максимальному количеству оставшихся символов, но не больше 4.
